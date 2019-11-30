@@ -20,10 +20,18 @@
     "@vue/babel-preset-jsx": "^1.1.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-clean-dist": "0.0.6",
+    "parcel-plugin-static-files-copy": "^2.2.1",
     "vue": "^2.6.10",
     "vue-styled-components": "^1.4.14"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"
-  }
+  },
+  "staticFiles": {
+    "staticPath":
+        {
+            "staticPath": "src",
+            "staticOutDir": "src"
+        }
+}
 }
