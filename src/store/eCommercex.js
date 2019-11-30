@@ -12,7 +12,8 @@ export default store({
       height:200,
       limit:6,
       offset:0,
-      indexCart:[]
+      indexCart:[],
+      miniBagItems:[]
     }
     this_.state.paginationx.commit({type:'init'})
     this_.state.cartx.commit({type:'init'})
@@ -25,5 +26,18 @@ export default store({
   },
   addIndexCart(this_,data){
     this_.state.indexCart.push(data.val)
+  },
+  addItemToMiniBag(this_,data){
+    this_.state.miniBagItems.push(data.val)
+  },
+  removeItemFromMiniBag(this_,data){
+    this_.state.miniBagItems.splice(data.val,1)
+    this_.state.products[data.addedToCart].addedToCart=false
+    this_.state.indexCart=this_.state.indexCart.filter(index=>{
+      if(index===data.indexCart){
+        return false
+      }
+      return true
+    })
   }
 })

@@ -36,6 +36,7 @@ export default Vue.extend({
             imgUrl:e.cover_image_url+'?q=60&fit=crop&w='
             +this.eCommercex.state.width+'&h='
             +this.eCommercex.state.height,
+            cover_image_url:e.cover_image_url,
             title:e.title,
             description:e.description,
             price:e.retail_price.formatted_value,
@@ -117,6 +118,16 @@ export default Vue.extend({
               eCommercex.commit({type:'addIndexCart',val:
             (paginationx.state.actualPage-1)*eCommercex.state.limit+
           i})
+              eCommercex.commit({type:'addItemToMiniBag',val:{
+                indexCart:(paginationx.state.actualPage-1)*eCommercex.state.limit+i,
+                addedToCart:i,
+                price:p.price_value,
+                imgUrl:p.cover_image_url+
+                '?q=60&fit=crop&w='
+                +45+'&h='
+                +30,
+                title:p.title.substring(0,28).concat('...')
+              }})
             }
           }>add to cart</button>
         }

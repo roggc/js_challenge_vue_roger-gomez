@@ -66,6 +66,7 @@ export default Vue.extend({
                       imgUrl:e.cover_image_url+'?q=60&fit=crop&w='
                       +this.eCommercex.state.width+'&h='
                       +this.eCommercex.state.height,
+                      cover_image_url:e.cover_image_url,
                       title:e.title,
                       description:e.description,
                       price:e.retail_price.formatted_value,

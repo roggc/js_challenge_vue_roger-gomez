@@ -32,18 +32,75 @@ export default Vue.extend({
     font-size:0.7em;
     `
 
-    const cartx=this.eCommercex.state.cartx
+    const FontAwesomeIconS=s(FontAwesomeIcon)`
+    cursor:pointer;
+    `
+
+    const MiniBag=s.div`
+    position:absolute;
+    top:14px;
+    right:99px;
+    border-radius:3px;
+    background-color:white;
+    border:1px solid;
+    padding:3px;
+    width: 167px;
+    height: 207px;
+    font-size:0.8em;
+    overflow:auto;
+    .firstRow{
+      display:flex;
+      align-items:flex-start;
+      .button{
+        box-shadow:0 0 1px;
+        border-radius:33px;
+        margin: 1px;
+        padding: 1px;
+        cursor: pointer;
+      }
+    }
+    `
+
+    const Cart=s.div`
+    position:relative;
+    `
+
+    const eCommercex=this.eCommercex
+    const cartx=eCommercex.state.cartx
 
     const el=
     <Div>
     <span>Musement</span>
-    <div>
+    <Cart>
     <LittlePrice>€{
       (Math.round((cartx.state.totalPriceCart+0.00001)*100)/100).toFixed(2)
     }</LittlePrice>
-    <FontAwesomeIcon icon={faShoppingCart}/>
+    <FontAwesomeIconS icon={faShoppingCart} vOn:click={
+      ()=>{
+        cartx.commit({type:'toggleMiniBag'})
+      }
+    }/>
+    {cartx.state.showMinigBag&&
+      <MiniBag>
+      {eCommercex.state.miniBagItems.map((item,i)=>
+      <div>
+      <div class='firstRow'>
+      <div>{item.title}</div>
+      <div class='button' vOn:click={
+        ()=>{
+          eCommercex.commit({type:'removeItemFromMiniBag',val:i,
+        addedToCart:item.addedToCart,indexCart:item.indexCart})
+          cartx.commit({type:'removeFromCart',val:item.price})
+        }
+      }>x</div>
+      </div>
+      <div><img src={item.imgUrl}/></div>
+      <div><span>€{item.price}</span></div>
+      <hr/>
+      </div>)}
+      </MiniBag>}
     <ItemsNumber>{cartx.state.totalItemsCart}</ItemsNumber>
-    </div>
+    </Cart>
     </Div>
 
     return el
