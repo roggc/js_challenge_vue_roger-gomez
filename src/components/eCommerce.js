@@ -38,7 +38,9 @@ export default Vue.extend({
             +this.eCommercex.state.height,
             title:e.title,
             description:e.description,
-            price:e.retail_price.formatted_value
+            price:e.retail_price.formatted_value,
+            price_value:e.retail_price.value,
+            addedToCart:false
           })
         })
     })
@@ -67,7 +69,8 @@ export default Vue.extend({
     justify-content:space-between;
     align-items:center;
     button{
-      background-color:aliceblue;
+      background-color:grey;
+      color:white;
       border-radius:14px;
       padding:5px;
       cursor:pointer;
@@ -76,8 +79,20 @@ export default Vue.extend({
     }
     `
 
+    const InCart=s.span`
+    background-color: blue;
+    color: white;
+    border-radius: 14px;
+    padding: 5px;
+    font-size:.8em;
+    `
+
+    const eCommercex=this.eCommercex
+    const cartx=eCommercex.state.cartx
+    const paginationx=eCommercex.state.paginationx
+
     const products=[]
-    this.eCommercex.state.products.forEach(p=>{
+    eCommercex.state.products.forEach((p,i)=>{
       products.push(
         <ProductItem>
         <div>{p.title}</div>
@@ -85,7 +100,26 @@ export default Vue.extend({
         <div>{p.description}</div>
         <PriceAndCart>
         <span>{p.price}</span>
-        <button>cart</button>
+        {
+          p.addedToCart||
+          eCommercex.state.indexCart.some(index=>{
+            if((paginationx.state.actualPage-1)*eCommercex.state.limit+i===
+          index){
+            return true
+          }
+          })
+          ?
+          <InCart>in cart</InCart>:
+          <button vOn:click={
+            ()=>{
+              cartx.commit({type:'addToCart',val:p.price_value})
+              eCommercex.commit({type:'addedToCart',val:i})
+              eCommercex.commit({type:'addIndexCart',val:
+            (paginationx.state.actualPage-1)*eCommercex.state.limit+
+          i})
+            }
+          }>add to cart</button>
+        }
         </PriceAndCart>
         </ProductItem>
       )
@@ -98,12 +132,12 @@ export default Vue.extend({
 
     const el=
     <Div>
-    <Header/>
+    <Header eCommercex={eCommercex}/>
     <Content>
     <Flex>
     {products}
     </Flex>
-    <Pagination eCommercex={this.eCommercex}/>
+    <Pagination eCommercex={eCommercex}/>
     </Content>
     <Footer/>
     </Div>

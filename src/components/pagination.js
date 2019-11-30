@@ -24,7 +24,8 @@ export default Vue.extend({
     color:grey;
     `
 
-    const paginationx=this.eCommercex.state.paginationx
+    const eCommercex=this.eCommercex
+    const paginationx=eCommercex.state.paginationx
 
     const pages=[]
 
@@ -42,6 +43,7 @@ export default Vue.extend({
           pages.push(<Page vOn:click={
             (i=>()=>{
               paginationx.commit({type:'setActualPage',val:i+1})
+              eCommercex.commit({type:'setOffset',val:i})
               fetch(
                 'https://api.musement.com/api/v3/venues/164/activities'
                 +'?limit='+this.eCommercex.state.limit+'&offset='
@@ -66,7 +68,9 @@ export default Vue.extend({
                       +this.eCommercex.state.height,
                       title:e.title,
                       description:e.description,
-                      price:e.retail_price.formatted_value
+                      price:e.retail_price.formatted_value,
+                      price_value:e.retail_price.value,
+                      addedToCart:false
                     })
                   })
               })
