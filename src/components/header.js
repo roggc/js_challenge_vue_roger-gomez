@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import s from 'vue-styled-components'
-import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+import {faShoppingCart,faStar} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 export default Vue.extend({
@@ -65,12 +65,17 @@ export default Vue.extend({
     position:relative;
     `
 
+    const Title=s.span`
+    flex-grow:2;
+    `
+
     const eCommercex=this.eCommercex
     const cartx=eCommercex.state.cartx
+    const wishx=eCommercex.state.wishx
 
     const el=
     <Div>
-    <span>Musement</span>
+    <Title>Musement</Title>
     <Cart>
     <LittlePrice>€{
       (Math.round((cartx.state.totalPriceCart+0.00001)*100)/100).toFixed(2)
@@ -101,6 +106,10 @@ export default Vue.extend({
       </MiniBag>}
     <ItemsNumber>{cartx.state.totalItemsCart}</ItemsNumber>
     </Cart>
+    <div>
+    <FontAwesomeIcon icon={faStar}/>
+    <ItemsNumber>{wishx.state.totalItemsWish}</ItemsNumber>
+    </div>
     </Div>
 
     return el
