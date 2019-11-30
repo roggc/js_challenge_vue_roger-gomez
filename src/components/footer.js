@@ -1,17 +1,21 @@
 import Vue from 'vue'
 import s from 'vue-styled-components'
-import ECommerce from './eCommerce'
 
 export default Vue.extend({
-  name:'myApp',
+  name:'myFooter',
   render(){
     const Div=s.div`
-    height:100%;
+    height:8%;
+    font-size:.9em;
+    margin:3px;
+    display:flex;
+    align-items:center;
     `
     const el=
     <Div>
-    <ECommerce/>
+    @ 2019 musement
     </Div>
+
     return el
   }
 })

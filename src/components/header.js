@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import s from 'vue-styled-components'
-import ECommerce from './eCommerce'
 
 export default Vue.extend({
-  name:'myApp',
+  name:'myHeader',
   render(){
     const Div=s.div`
-    height:100%;
+    height:11%;
+    margin:3px;
+    display:flex;
+    align-items:center;
     `
     const el=
     <Div>
-    <ECommerce/>
+    Musement
     </Div>
+
     return el
   }
 })
